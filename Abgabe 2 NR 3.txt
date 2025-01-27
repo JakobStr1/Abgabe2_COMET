@@ -65,3 +65,28 @@ ergebnis2
 #Beispiel 3
 ergebnis3 <- wichtel_unglueck(n, k=1, iterationen = 1e6)
 ergebnis3
+
+#3.4
+# Installieren und laden von {testthat}, falls noch nicht geschehen
+# install.packages("testthat")
+library(testthat)
+
+# Testfall 1: Wahrscheinlichkeit für n = 8, k = 0
+test_that("Wahrscheinlichkeit für n=8, k=0", {
+  expect_equal(round(wichtel_unglueck(8, 0), 4), 0.3686, tolerance = 0.05)
+})
+
+# Testfall 2: Wahrscheinlichkeit für n = 8, k = 1
+test_that("Wahrscheinlichkeit für n=8, k=1", {
+  expect_gt(wichtel_unglueck(8, 1), 0.3686)  # Wahrscheinlichkeit sollte größer sein
+})
+
+# Testfall 3: Wahrscheinlichkeit für n = 10, k = 2
+test_that("Wahrscheinlichkeit für n=10, k=2", {
+  expect_gt(wichtel_unglueck(10, 2), 0.5)  # Wahrscheinlichkeit sollte eine sinnvolle Zahl sein
+})
+
+# Testfall 4: Wahrscheinlichkeit für n = 5, k = 0
+test_that("Wahrscheinlichkeit für n=5, k=0", {
+  expect_equal(round(wichtel_unglueck(5, 0), 4), 0.44, tolerance = 0.05)  # Näherung an die Wahrscheinlichkeit
+})
