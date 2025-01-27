@@ -67,8 +67,8 @@ ergebnis3 <- wichtel_unglueck(n, k=1, iterationen = 1e6)
 ergebnis3
 
 #3.4
-# Installieren und laden von {testthat}, falls noch nicht geschehen
-# install.packages("testthat")
+# Installieren und laden von {testthat}
+install.packages("testthat")
 library(testthat)
 
 # Testfall 1: Wahrscheinlichkeit für n = 8, k = 0
