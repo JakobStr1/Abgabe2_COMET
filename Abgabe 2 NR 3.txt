@@ -1,0 +1,67 @@
+set.seed(1) # für reproduzierbare  Ergebnisse
+n <- 8 # Anzahl Personen
+iterationen <- 1e6 #Anzahl der Wiederholungen
+k <- 0 # Keine Person darf ihr eigenes Geschenk zurückerhalten
+#Zähler für Erfolge (kein Geschenk wird zurückerhalten)
+anzahl_erfolgreicher_faelle <- 0
+
+for(i in 1:iterationen) {
+  #Zufällige Zuordnung der Geschenke
+  zufallszuordnung <- sample(1:n)
+  
+  #Zähle, wie viele Personen ihr Geschenk zurückerhalten
+  rueckgaben <- sum(zufallszuordnung == 1:n)
+  
+  # Prüfen, ob keine Person ihr eigenes Geschenk zurückerhält
+  if(rueckgaben == k) {
+    anzahl_erfolgreicher_faelle <- anzahl_erfolgreicher_faelle +1
+  }
+}
+
+#Berechnung der Wahrscheinlichkeit
+wahrscheinlichkeit <- anzahl_erfolgreicher_faelle / iterationen
+
+
+#3.2
+# Funktion zur Berechnung der Wahrscheinlichkeit für beliebiges n, k und iterationen
+wichtel_unglueck <- function(n, k, iterationen = 1e6) {
+  # Gültigkeitsprüfung der Einbagben
+  if (n <= 0 || k < 0 || iterationen <= 0)
+  
+  if (k > n) 
+  
+  #Konvertiere 'iterationen' zu einer ganzen Zahl
+  iterationen <- as.integer(iterationen)
+  
+  # Zähler für Erfolge (höchstens k Perosnen erhalten ihr eigenes Geschenk)
+  anzahl_erfolgreicher_faelle <- 0
+  
+  #Simulation
+  set.seed(1) #Wieder für reproduzierbare Ergebnisse
+  for(i in 1:iterationen){
+    #Zufällige Zuordnung der Geschenke
+    zufallszuordnung <- sample(1:n)
+    
+    #Zähle erneut, wie viele Personen ihr Geschenk zurückerhalten
+    rueckgaben <- sum(zufallszuordnung == 1:n)
+    
+    #Prüfen, ob höchstens k Personen ihr eigenes Geschenk zurückerhalten
+    if (rueckgaben <= k) {
+      anzahl_erfolgreicher_faelle <- anzahl_erfolgreicher_faelle + 1
+    }
+  }
+  #Berechnung der Wahrscheinlichkeit
+  wahrscheinlichkeit <- anzahl_erfolgreicher_faelle / iterationen
+  
+  #Ergebnis zurückgeben
+  return(wahrscheinlichkeit)
+}
+#Beispiel 1
+ergebnis1 <- wichtel_unglueck(n, k=0, iterationen = 1e6)
+ergebnis1
+#Beispiel 2
+ergebnis2 <- wichtel_unglueck(n, k=2, iterationen = 1e6)
+ergebnis2
+#Beispiel 3
+ergebnis3 <- wichtel_unglueck(n, k=1, iterationen = 1e6)
+ergebnis3
