@@ -66,7 +66,7 @@ ergebnis2
 ergebnis3 <- wichtel_unglueck(n, k=1, iterationen = 1e6)
 ergebnis3
 
-#3.4
+#3.4 
 # Installieren und laden von {testthat}
 install.packages("testthat")
 library(testthat)
@@ -90,3 +90,168 @@ test_that("Wahrscheinlichkeit für n=10, k=2", {
 test_that("Wahrscheinlichkeit für n=5, k=0", {
   expect_equal(round(wichtel_unglueck(5, 0), 4), 0.44, tolerance = 0.05)  # Näherung an die Wahrscheinlichkeit
 })
+
+#3.5
+data <- read.csv(
+  file = "C:/Users/jakob/Desktop/Sqlite/bike.csv",  # Pfad zur .csv-Datei
+  header = TRUE,         # die Datei hat eine Kopfzeile
+  sep = ",",             # die Zellen sind durch Kommata getrennt
+  dec = "."              # das Zeichen für Dezimalstellen
+)
+
+class(data)
+
+#(1) Filtern nach Gruppe 70
+install.packages("dplyr") 
+library(dplyr)
+
+gefilterte_daten <- data %>%
+  filter(group == 70)
+head(gefilterte_daten)
+
+#(2) NA's
+anyNA(gefilterte_daten)
+anyNA(gefilterte_daten$station)
+anyNA(gefilterte_daten$date)
+
+anyNA(gefilterte_daten$day_of_year) #enthält NA's
+which(is.na(gefilterte_daten$day_of_year))
+sum(is.na(gefilterte_daten$day_of_year))
+gefilterte_daten$day_of_year[135]
+gefilterte_daten$day_of_year[136]
+gefilterte_daten$day_of_year[137]
+gefilterte_daten$day_of_year[136] <- gefilterte_daten$day_of_year[137]-1
+gefilterte_daten$day_of_year[313]
+gefilterte_daten$day_of_year[314]
+gefilterte_daten$day_of_year[315]
+gefilterte_daten$day_of_year[314] <- gefilterte_daten$day_of_year[315]-1
+
+
+
+anyNA(gefilterte_daten$day_of_week) #enthält NA's
+which(is.na(gefilterte_daten$day_of_week))
+sum(is.na(gefilterte_daten$day_of_week))
+gefilterte_daten$day_of_week[180]
+gefilterte_daten$day_of_week[181]
+gefilterte_daten$day_of_week[182]
+gefilterte_daten$day_of_week[183]
+gefilterte_daten$day_of_week[181] <- 1
+gefilterte_daten$day_of_week[281]
+gefilterte_daten$day_of_week[282]
+gefilterte_daten$day_of_week[283]
+gefilterte_daten$day_of_week[284]
+gefilterte_daten$day_of_week[282] <- 4
+
+
+
+anyNA(gefilterte_daten$month_of_year) #enthält NA's
+which(is.na(gefilterte_daten$month_of_year))
+sum(is.na(gefilterte_daten$month_of_year))
+gefilterte_daten$month_of_year[138]
+gefilterte_daten$month_of_year[139]
+gefilterte_daten$month_of_year[140]
+gefilterte_daten$month_of_year[139] <- gefilterte_daten$month_of_year[138]
+gefilterte_daten$month_of_year[265]
+gefilterte_daten$month_of_year[266]
+gefilterte_daten$month_of_year[267]
+gefilterte_daten$month_of_year[266] <- gefilterte_daten$month_of_year[265]
+
+
+
+anyNA(gefilterte_daten$precipitation) #enthält NA's
+is.na(gefilterte_daten$precipitation)
+pr <- which(is.na(gefilterte_daten$precipitation))
+gefilterte_daten[pr, ]
+median_precipitation <- median(gefilterte_daten$precipitation, na.rm = TRUE)
+gefilterte_daten[pr, "precipitation"] <- median_precipitation  # Median precipitation imputieren
+anyNA(gefilterte_daten$precipitation)#Jetzt FALSE
+median(gefilterte_daten$precipitation)
+
+
+anyNA(gefilterte_daten$min_temperature) #enhält NA's
+is.na(gefilterte_daten$min_temperature)
+mit <- which(is.na(gefilterte_daten$min_temperature))
+gefilterte_daten[mit, ]
+median_min_temperature <- median(gefilterte_daten$min_temperature, na.rm = TRUE)
+gefilterte_daten[mit, "min_temperature"] <- median_min_temperature  # Median min_temperature imputieren
+anyNA(gefilterte_daten$min_temperature)#Jetzt FALSE
+median(gefilterte_daten$min_temperature)
+
+
+anyNA(gefilterte_daten$average_temperature) #enhält NA's
+is.na(gefilterte_daten$average_temperature)
+at <- which(is.na(gefilterte_daten$average_temperature))
+gefilterte_daten[at, ]
+median_average_temperature <- median(gefilterte_daten$average_temperature, na.rm = TRUE)
+gefilterte_daten[at, "average_temperature"] <- median_average_temperature  # Median average_temperature imputieren
+anyNA(gefilterte_daten$average_temperature)#Jetzt FALSE
+median(gefilterte_daten$average_temperature)
+
+
+anyNA(gefilterte_daten$max_temperature) #enhält NA's
+is.na(gefilterte_daten$max_temperature)
+mt <- which(is.na(gefilterte_daten$max_temperature))
+gefilterte_daten[mt, ]
+median_max_temperature <- median(gefilterte_daten$max_temperature, na.rm = TRUE)
+gefilterte_daten[mt, "max_temperature"] <- median_max_temperature  # Median max_temperature imputieren
+anyNA(gefilterte_daten$max_temperature)#Jetzt FALSE
+median(gefilterte_daten$max_temperature)
+
+
+
+anyNA(gefilterte_daten$windspeed) #enthält NA's
+is.na(gefilterte_daten$windspeed)
+ws <- which(is.na(gefilterte_daten$windspeed))
+gefilterte_daten[ws, ]
+median_windspeed <- median(gefilterte_daten$windspeed, na.rm = TRUE)
+gefilterte_daten[ws, "windspeed"] <- median_windspeed  # Median windspeed imputieren
+anyNA(gefilterte_daten$windspeed)#Jetzt FALSE
+
+
+
+anyNA(gefilterte_daten$count) #enhält NA's
+which(is.na(gefilterte_daten$count))
+gefilterte_daten$count[105:120]
+mean(gefilterte_daten$count)#Fahrräder nur ganze Zahlen. Mittelwert wird gerundet.
+gefilterte_daten$count[113]<- 59.0000
+
+
+dim(gefilterte_daten)
+
+#(3)
+range(gefilterte_daten$station)
+range(gefilterte_daten$date)
+range(gefilterte_daten$day_of_year)
+range(gefilterte_daten$day_of_week)
+range(gefilterte_daten$month_of_year)
+range(gefilterte_daten$precipitation)#negativer Niederschlag?
+which(gefilterte_daten$precipitation == -1.00)
+gefilterte_daten$precipitation[107:111]
+gefilterte_daten$precipitation[109] <- 0.00 #damit reiht sich der Wert in die Umliegenden ein
+range(gefilterte_daten$windspeed)#negativer Windspeed?
+which(gefilterte_daten$windspeed == -1.00)
+gefilterte_daten$windspeed[74:78]
+gefilterte_daten$windspeed[76] <- mean(gefilterte_daten$windspeed)#Mittelwert um Anomalie zwischen 9.84 und 16.55 zu vermeiden. Mittelwert->10.914 passt hier gut. Median wäre auch gegangen 
+range(gefilterte_daten$min_temperature)
+range(gefilterte_daten$average_temperature)
+range(gefilterte_daten$max_temperature)
+range(gefilterte_daten$count)
+
+# Umrechnung der Spalten von Fahrenheit nach Celsius durch erstellen neuer Celsius-Spalten
+gefilterte_daten$min_temperature_Celsius <- (gefilterte_daten$min_temperature - 32) * 5 / 9
+gefilterte_daten$average_temperature_Celsius <- (gefilterte_daten$average_temperature - 32) * 5 / 9
+gefilterte_daten$max_temperature_Celsius <- (gefilterte_daten$max_temperature - 32) * 5 / 9
+
+range(gefilterte_daten$min_temperature_Celsius)
+range(gefilterte_daten$average_temperature_Celsius)
+range(gefilterte_daten$max_temperature_Celsius)
+
+#(4)
+# Berechne die Gesamteinnahmen pro Monat
+monats_vermietungen <- gefilterte_daten %>%
+  group_by(month_of_year) %>%
+  summarise(Gesamtvermietungen = sum(count))  # Summiere die Einnahmen pro Monat
+print(monats_vermietungen)
+monat_max_vermietungen <- monats_vermietungen %>%
+  filter(Gesamtvermietungen == max(Gesamtvermietungen))
+print(monat_max_vermietungen)#Monat 8 (August) mit 2758 Vermieteten Fahrrädern
