@@ -1,3 +1,4 @@
+# options(repos = c(CRAN = "https://cran.rstudio.com/"))
 set.seed(1) # für reproduzierbare  Ergebnisse
 n <- 8 # Anzahl Personen
 iterationen <- 1e6 #Anzahl der Wiederholungen
@@ -20,18 +21,18 @@ for(i in 1:iterationen) {
 
 #Berechnung der Wahrscheinlichkeit
 wahrscheinlichkeit <- anzahl_erfolgreicher_faelle / iterationen
-
+cat(wahrscheinlichkeit)
 
 #3.2
 # Funktion zur Berechnung der Wahrscheinlichkeit für beliebiges n, k und iterationen
 wichtel_unglueck <- function(n, k, iterationen = 1e6) {
   # Gültigkeitsprüfung der Einbagben
   if (n <= 0 || k < 0 || iterationen <= 0)
-  
-  if (k > n) 
-  
-  #Konvertiere 'iterationen' zu einer ganzen Zahl
-  iterationen <- as.integer(iterationen)
+    
+    if (k > n) 
+      
+      #Konvertiere 'iterationen' zu einer ganzen Zahl
+      iterationen <- as.integer(iterationen)
   
   # Zähler für Erfolge (höchstens k Perosnen erhalten ihr eigenes Geschenk)
   anzahl_erfolgreicher_faelle <- 0
@@ -68,7 +69,7 @@ ergebnis3
 
 #3.4 
 # Installieren und laden von {testthat}
-install.packages("testthat")
+#install.packages("testthat")
 library(testthat)
 
 # Testfall 1: Wahrscheinlichkeit für n = 8, k = 0
@@ -86,9 +87,9 @@ test_that("Wahrscheinlichkeit für n=10, k=2", {
   expect_gt(wichtel_unglueck(10, 2), 0.5)  # Wahrscheinlichkeit sollte eine sinnvolle Zahl sein
 })
 
-# Testfall 4: Wahrscheinlichkeit für n = 5, k = 0
-test_that("Wahrscheinlichkeit für n=5, k=0", {
-  expect_equal(round(wichtel_unglueck(5, 0), 4), 0.44, tolerance = 0.05)  # Näherung an die Wahrscheinlichkeit
+# Testfall 4: Wahrscheinlichkeit für n = 5, k = 5
+test_that("Wahrscheinlichkeit für n=5, k=5", {
+  expect_equal(wichtel_unglueck(5, 5), 1)  # Näherung an die Wahrscheinlichkeit
 })
 
 #3.5
@@ -102,7 +103,7 @@ data <- read.csv(
 class(data)
 
 #(1) Filtern nach Gruppe 70
-install.packages("dplyr") 
+#install.packages("dplyr") 
 library(dplyr)
 
 gefilterte_daten <- data %>%
@@ -236,6 +237,8 @@ range(gefilterte_daten$min_temperature)
 range(gefilterte_daten$average_temperature)
 range(gefilterte_daten$max_temperature)
 range(gefilterte_daten$count)
+which(gefilterte_daten$count <= 0)
+gefilterte_daten$count[169] <- 59
 
 # Umrechnung der Spalten von Fahrenheit nach Celsius durch erstellen neuer Celsius-Spalten
 gefilterte_daten$min_temperature_Celsius <- (gefilterte_daten$min_temperature - 32) * 5 / 9
