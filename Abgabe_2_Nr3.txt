@@ -84,7 +84,7 @@ test_that("Wahrscheinlichkeit für n=8, k=1", {
 
 # Testfall 3: Wahrscheinlichkeit für n = 10, k = 2
 test_that("Wahrscheinlichkeit für n=10, k=2", {
-  expect_gt(wichtel_unglueck(10, 2), 0.5)  # Wahrscheinlichkeit sollte eine sinnvolle Zahl sein
+  expect_gt(wichtel_unglueck(10, 2), 0.5)  # Wahrsch.t sollte sinnvolle Zahl sein
 })
 
 # Testfall 4: Wahrscheinlichkeit für n = 5, k = 5
@@ -164,7 +164,8 @@ is.na(gefilterte_daten$precipitation)
 pr <- which(is.na(gefilterte_daten$precipitation))
 gefilterte_daten[pr, ]
 median_precipitation <- median(gefilterte_daten$precipitation, na.rm = TRUE)
-gefilterte_daten[pr, "precipitation"] <- median_precipitation  # Median precipitation imputieren
+gefilterte_daten[pr, "precipitation"] <- median_precipitation  
+# Median precipitation imputieren
 anyNA(gefilterte_daten$precipitation)#Jetzt FALSE
 median(gefilterte_daten$precipitation)
 
@@ -174,7 +175,8 @@ is.na(gefilterte_daten$min_temperature)
 mit <- which(is.na(gefilterte_daten$min_temperature))
 gefilterte_daten[mit, ]
 median_min_temperature <- median(gefilterte_daten$min_temperature, na.rm = TRUE)
-gefilterte_daten[mit, "min_temperature"] <- median_min_temperature  # Median min_temperature imputieren
+gefilterte_daten[mit, "min_temperature"] <- median_min_temperature  
+# Median min_temperature imputieren
 anyNA(gefilterte_daten$min_temperature)#Jetzt FALSE
 median(gefilterte_daten$min_temperature)
 
@@ -184,7 +186,8 @@ is.na(gefilterte_daten$average_temperature)
 at <- which(is.na(gefilterte_daten$average_temperature))
 gefilterte_daten[at, ]
 median_average_temperature <- median(gefilterte_daten$average_temperature, na.rm = TRUE)
-gefilterte_daten[at, "average_temperature"] <- median_average_temperature  # Median average_temperature imputieren
+gefilterte_daten[at, "average_temperature"] <- median_average_temperature  
+# Median average_temperature imputieren
 anyNA(gefilterte_daten$average_temperature)#Jetzt FALSE
 median(gefilterte_daten$average_temperature)
 
@@ -194,7 +197,8 @@ is.na(gefilterte_daten$max_temperature)
 mt <- which(is.na(gefilterte_daten$max_temperature))
 gefilterte_daten[mt, ]
 median_max_temperature <- median(gefilterte_daten$max_temperature, na.rm = TRUE)
-gefilterte_daten[mt, "max_temperature"] <- median_max_temperature  # Median max_temperature imputieren
+gefilterte_daten[mt, "max_temperature"] <- median_max_temperature  
+# Median max_temperature imputieren
 anyNA(gefilterte_daten$max_temperature)#Jetzt FALSE
 median(gefilterte_daten$max_temperature)
 
@@ -205,7 +209,8 @@ is.na(gefilterte_daten$windspeed)
 ws <- which(is.na(gefilterte_daten$windspeed))
 gefilterte_daten[ws, ]
 median_windspeed <- median(gefilterte_daten$windspeed, na.rm = TRUE)
-gefilterte_daten[ws, "windspeed"] <- median_windspeed  # Median windspeed imputieren
+gefilterte_daten[ws, "windspeed"] <- median_windspeed  
+# Median windspeed imputieren
 anyNA(gefilterte_daten$windspeed)#Jetzt FALSE
 
 
@@ -228,11 +233,14 @@ range(gefilterte_daten$month_of_year)
 range(gefilterte_daten$precipitation)#negativer Niederschlag?
 which(gefilterte_daten$precipitation == -1.00)
 gefilterte_daten$precipitation[107:111]
-gefilterte_daten$precipitation[109] <- 0.00 #damit reiht sich der Wert in die Umliegenden ein
+gefilterte_daten$precipitation[109] <- 0.00 
+#damit reiht sich der Wert in die Umliegenden ein
 range(gefilterte_daten$windspeed)#negativer Windspeed?
 which(gefilterte_daten$windspeed == -1.00)
 gefilterte_daten$windspeed[74:78]
-gefilterte_daten$windspeed[76] <- mean(gefilterte_daten$windspeed)#Mittelwert um Anomalie zwischen 9.84 und 16.55 zu vermeiden. Mittelwert->10.914 passt hier gut. Median wäre auch gegangen 
+gefilterte_daten$windspeed[76] <- mean(gefilterte_daten$windspeed)
+#Mittelwert um Anomalie zwischen 9.84 und 16.55 zu vermeiden. 
+#Mittelwert->10.914 passt hier gut. Median wäre auch gegangen 
 range(gefilterte_daten$min_temperature)
 range(gefilterte_daten$average_temperature)
 range(gefilterte_daten$max_temperature)
@@ -241,9 +249,9 @@ which(gefilterte_daten$count <= 0)
 gefilterte_daten$count[169] <- 59
 
 # Umrechnung der Spalten von Fahrenheit nach Celsius durch erstellen neuer Celsius-Spalten
-gefilterte_daten$min_temperature_Celsius <- (gefilterte_daten$min_temperature - 32) * 5 / 9
-gefilterte_daten$average_temperature_Celsius <- (gefilterte_daten$average_temperature - 32) * 5 / 9
-gefilterte_daten$max_temperature_Celsius <- (gefilterte_daten$max_temperature - 32) * 5 / 9
+gefilterte_daten$min_temperature_Celsius<-(gefilterte_daten$min_temperature-32)*5/9
+gefilterte_daten$average_temperature_Celsius<-(gefilterte_daten$average_temperature-32)*5/9
+gefilterte_daten$max_temperature_Celsius<-(gefilterte_daten$max_temperature-32)*5/9
 
 range(gefilterte_daten$min_temperature_Celsius)
 range(gefilterte_daten$average_temperature_Celsius)
