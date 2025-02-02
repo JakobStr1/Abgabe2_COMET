@@ -1,7 +1,12 @@
 #4.1
-#1.Die Farben für "Zuschüsse für bilaterale Vorhaben", "Zuschüsse für Klimafonds" und "Anteilige Mittel Entwicklungsbanken" sind zu ähnlich, da sie lediglich verschiedene Grünstufen sind. Das ist keine sinnvolle Farbskala.
-#2.Es werden verschiedene Kennzahlen in einem Balken übereinander dargestellt, was die Differenzierung der einzelnen Bestandteile erschwert. Man kann die Smileys auch als Chartjunk bezeichnen.
-#3.Es gibt keine Beschriftung und Erklärung zur Y-Achse. Man weiß nicht, ob die Einheiten konstant sind.
+#1.Die Farben für "Zuschüsse für bilaterale Vorhaben", "Zuschüsse für Klimafonds" und 
+#  "Anteilige Mittel Entwicklungsbanken" sind zu ähnlich, da sie lediglich verschiedene 
+#  Grünstufen sind. Das ist keine sinnvolle Farbskala.
+#2.Es werden verschiedene Kennzahlen in einem Balken übereinander dargestellt, was die 
+#  Differenzierung der einzelnen Bestandteile erschwert. Man kann die Smileys auch als 
+#  Chartjunk bezeichnen.
+#3.Es gibt keine Beschriftung und Erklärung zur Y-Achse. Man weiß nicht, ob die 
+#  Einheiten konstant sind.
 
 
 
@@ -17,7 +22,7 @@ ggplot(gefilterte_daten) +
   scale_color_gradient(low="blue", high="red") +
   xlab("Anzahl verliehener Fahrräder") +
   ylab("Temperatur (in Grad Celsius)") +
-  ggtitle("Zusammenhang Anz. verliehener Fahrräder und Temperatur (in Grad Celsius)")
+  ggtitle("Zusammenhang Anz. Fahrradverleihe und Temperatur (in Grad Celsius)")
 
 #per. vs count
 ggplot(gefilterte_daten) +
@@ -25,23 +30,26 @@ ggplot(gefilterte_daten) +
   scale_color_gradient(low ="blue", high ="red")+
   xlab("Anzahl verliehener Fahrräder") +
   ylab("Niederschlagsmenge (in mm)") +
-  ggtitle("Zusammenhang zwischen Anz. verliehener Fahrräder und Niederschlagsmenge (in mm)")
+  ggtitle("Zusammenhang Anz. Fahrradverleihe und Niederschlagsmenge (in mm)")
   
 #windspeed vs count
 ggplot(gefilterte_daten) +
   geom_point(aes(x = count, y = windspeed), colour ="blue", size = 1)+
   xlab("Anzahl verliehener Fahrräder") +
   ylab("Windgeschwindigkeit (in km/h)") +
-  ggtitle("Zusammenhang zwischen Anz. verliehener Fahrräder und Windgeschwindigkeit (in km/h)")
+  ggtitle("Zusammenhang Anz. Fahrradverleihe und Windgeschwindigkeit (in km/h)")
 
 #Time vs count
 ggplot(gefilterte_daten) +
-  geom_line(aes(x = as.Date(date), y = count), colour ="black", size = 1)+
+  geom_line(aes(x = as.Date(date), y = count), colour ="black", linewidth = 1)+
   scale_x_date(date_labels = "%B", date_breaks = "1 month")+
-  geom_vline(xintercept = as.Date(c("2023-02-01", "2023-03-01","2023-04-01","2023-05-01", "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01")), linetype = "dashed", color = "gray") +
+  geom_vline(xintercept = as.Date(c("2023-02-01", "2023-03-01","2023-04-01","2023-05-01",
+                                    "2023-06-01", "2023-07-01", "2023-08-01", "2023-09-01",
+                                    "2023-10-01", "2023-11-01", "2023-12-01")), 
+                                    linetype="dashed", color = "gray") +
   xlab("Monat") +
   ylab("Anz. verliehener Fahrräder") +
-  ggtitle("Zusammenhang zwischen der Zeit (in Monaten) und Anz. verliehener Fahrräder")
+  ggtitle("Zusammenhang der Zeit (in Monaten) und Anz. Fahrradverleihe")
 
 
 #4.3
@@ -58,13 +66,13 @@ ggplot(Regentage)+
   geom_point(aes(x = average_temperature, y = count), color = "blue")+
   xlab("Durchschnittstemperatur (Fahrenheit)") +
   ylab("Anz. der ausgeliehenen Fahrräder") +
-  ggtitle("Anzahl der verliehenen Fahrräder an Regentagen")
+  ggtitle("Anzahl Fahrradverleihe an Regentagen")
 
 ggplot(keine_Regentage)+
   geom_point(aes(x = average_temperature, y = count), color = "blue")+
   xlab("Durchschnittstemperatur (Fahrenheit)") +
   ylab("Anz. der ausgeliehenen Fahrräder") +
-  ggtitle("Anzahl der verliehenen Fahrräder an trockenen Tagen")
+  ggtitle("Anzahl Fahrradverleihe an trockenen Tagen")
 
 
 
@@ -73,12 +81,12 @@ Verteilung_count_Plot <- ggplot((gefilterte_daten))+
   geom_histogram(aes(x = count),fill="yellow", color="black", bins=30)+
   xlab("Anz. der verliehenen Fahrräder")+
   ylab("Häufigkeit")+
-  ggtitle("Verteilung der Anz. verliehener Fahrräder")
+  ggtitle("Verteilung der Anz. Fahrradverleihe")
 print(Verteilung_count_Plot) 
 
 Verteilung_Temperatur_Plot <- ggplot((gefilterte_daten))+
-  geom_histogram(aes(x = average_temperature),fill="purple", color="black", bins=30)+
-  xlab("Durchschnittstemperatur (Fahrenheit)")+
+  geom_histogram(aes(x = average_temperature_Celsius),fill="purple", color="black", bins=30)+
+  xlab("Durchschnittstemperatur (in Celsius)")+
   ylab("Häufigkeit")+
   ggtitle("Verteilung der Temperatur")
 print(Verteilung_Temperatur_Plot)
@@ -99,13 +107,15 @@ print(Verteilung_windspeed_Plot)
 
 
 #4.5
-gefilterte_daten$Jahreszeit <- cut(gefilterte_daten$month_of_year, breaks = c(0, 3, 6, 9, 12), labels = c("Winter", "Frühling", "Sommer", "Herbst"), include.lowest = TRUE)
+gefilterte_daten$Jahreszeit <- cut(gefilterte_daten$month_of_year, breaks = c(0, 3, 6, 9, 12),
+                                   labels = c("Winter", "Frühling", "Sommer", "Herbst"),
+                                   include.lowest = TRUE)
   
 ggplot(gefilterte_daten)+
   geom_density(aes(x = count, fill = Jahreszeit), alpha = 0.5)+
   xlab("Anz. verliehener Fahrräder")+
   ylab("Dichte")+
-  ggtitle("Verteilung der Anz. verliehener Fahrräder nach der Jahreszeit")
+  ggtitle("Verteilung Anz. Fahrradverleihe nach Jahreszeit")
 
 #4.6
 #install.packages("plotly")
